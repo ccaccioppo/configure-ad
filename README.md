@@ -25,7 +25,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 <img src="https://i.imgur.com/FiST5JT.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-We will create two virtual machines: one running Windows Server 2022, named DC-1, and the other running Windows 10, named Client1. Both VMs should be connected to the same virtual network (VNet). Next, we'll configure the IP address on the domain controller (DC-1), changing it from dynamic to static. This ensures the client machine can join the domain and use DC-1 as its DNS server.
+We will set up two virtual machines: one with Windows Server 2022, named DC-1, and the other with Windows 10, named Client1. Both virtual machines will be connected to the same virtual network (VNet). Following this, we will configure the IP address on the domain controller (DC-1), switching it from a dynamic assignment to a static one. This step is crucial to ensure that the client machine can successfully join the domain and utilize DC-1 as its DNS server.
 </p>
 <br />
 
@@ -33,7 +33,7 @@ We will create two virtual machines: one running Windows Server 2022, named DC-1
 <img src="https://i.imgur.com/wIfUJdl.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Next, we'll RDP into the domain controller and disable the firewall for the domain, private, and public profiles. To do this, right-click the Windows symbol, select "Run," and type wf.msc. In the Windows Defender Firewall window, ensure the firewall is turned off for all profiles.
+Next, we will use Remote Desktop Protocol (RDP) to connect to the domain controller and proceed to disable the firewall for the domain, private, and public profiles. To accomplish this, right-click on the Windows Start button, choose "Run," and enter wf.msc in the dialog box. Once the Windows Defender Firewall window opens, verify that the firewall is deactivated for all three profiles: domain, private, and public.
 </p>
 <br />
 
@@ -41,7 +41,7 @@ Next, we'll RDP into the domain controller and disable the firewall for the doma
 <img src="https://i.imgur.com/ER2Lw3V.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Next, we'll change the DNS server on Client1 to the static private IP address of DC-1 in the networking settings within the Azure portal. After making this change, restart the virtual machines to apply the new DNS configuration.
+Next, we will update the DNS server settings on Client1 by configuring it to use the static private IP address of DC-1. This change will be made in the networking settings within the Azure portal. Once the update is complete, restart the virtual machines to ensure the new DNS configuration is applied effectively.
 </p>
 <br />
 
@@ -50,7 +50,7 @@ Next, we'll change the DNS server on Client1 to the static private IP address of
 <img src="https://i.imgur.com/xm02kle.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Following that, we'll RDP into the Client1 virtual machine and attempt to ping DC-1's IP address using PowerShell. This should be successful since we disabled DC-1's firewall, allowing the machine to respond to the ping. We'll use the ipconfig /all command on Client1 to confirm that DC-1 is configured as the DNS server for the virtual machine.
+Next, the Remote Desktop Protocol (RDP) will be used for the sake of making a connection by us to the Client1 virtual machine. After we are connected onward, we will attempt to ping the IP address of DC-1 by using PowerShell. Upon such connection, we will try to ping the entire IP address. The ping should work since the firewall was previously disabled on DC-1, enabling responses to ICMP requests. Also, we will definitely execute the ipconfig /all command on Client1 to confirm that DC-1 is properly configured as the specific DNS server for the virtual machine.
 </p>
 <br />
 
@@ -106,7 +106,7 @@ Now, log out of DC-1 and reconnect using RDP with the credentials mydomain.com\k
 <img src="https://i.imgur.com/sWL89qz.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Now, we'll join the domain from the Client1 VM. RDP into the system, right-click the Windows logo, select System, then click Rename this PC (Advanced). Next, click Change, select Domain, and enter the domain name mydomain.com. The VM will restart to apply the changes.
+Next, we’ll join the Client1 VM to the domain. Start by connecting to the system via Remote Desktop Protocol (RDP). Once logged in, right-click the Windows logo and select System. From there, click on Rename this PC (Advanced). In the next window, select Change, choose the Domain option, and enter the domain name mydomain.com. After completing these steps, the VM will restart to apply the changes.
 </p>
 <br />
 
@@ -130,7 +130,7 @@ Next, log into the Client1 VM as ken_admin. Right-click the Windows logo, select
 <img src="https://i.imgur.com/DoCgqOP.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1 Log in to DC-1 as ken_admin and open PowerShell ISE as an administrator. Create a new file, paste the script into it, and execute it. Observe as the accounts are created automatically.
+https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1 Sign in to DC-1 using the ken_admin account and launch PowerShell ISE with administrator privileges. Create a new script file, paste the provided code into it, and run the script. Watch as the accounts are generated automatically.
 </p>
 <br />
 
@@ -138,7 +138,7 @@ https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps
 <img src="https://i.imgur.com/Ca3ShWL.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-After running the script, open Active Directory Users and Computers (ADUC) and verify that the accounts have been created in the appropriate _EMPLOYEES organizational unit.
+Once you’ve executed the script, launch Active Directory Users and Computers (ADUC) and check to confirm that the new accounts have been successfully created in the correct _EMPLOYEES organizational unit.
 </p>
 <br />
 
@@ -146,6 +146,6 @@ After running the script, open Active Directory Users and Computers (ADUC) and v
 <img src="https://i.imgur.com/PWd6tW8.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Lastly, log in to the Client1 VM using one of the user accounts created by the PowerShell script, with the username and default password Password1. After logging in, open PowerShell to verify that you are logged in as one of the script-created users.
+Finally, sign in to the Client1 VM using one of the user accounts generated by the PowerShell script. Use the username and the default password, which is "Password1." Once logged in, open PowerShell to confirm that you are signed in as one of the users created by the script.
 </p>
 <br />
